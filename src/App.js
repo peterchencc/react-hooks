@@ -4,26 +4,31 @@ import AddUserForm from './forms/AddUserForm'
 import EditUserForm from './forms/EditUserForm'
 
 const App = () => {
+  // Data
   const usersData = [
     { id: 1, name: 'Peter Chen', username: 'peterchen' },
     { id: 2, name: 'Peter Chen 1', username: 'peterchen1' },
     { id: 3, name: 'Peter Chen 2', username: 'peterchen2' }
   ]
 
-  const [users, setUsers] = useState(usersData)
+  const initialFormState = { id: null, name: '', username: '' }
 
+  // Setting state
+  const [users, setUsers] = useState(usersData)
+  const [editing, setEditing] = useState(false)
+  const [currentUser, setCurrentUser] = useState(initialFormState)
+
+  // CRUD operations
   const addUser = user => {
     user.id = users.length + 1
     setUsers([...users, user])
   }
 
   const deleteUser = id => {
+    setEditing(false)
+
     setUsers(users.filter(user => user.id !== id))
   }
-
-  const [editing, setEditing] = useState(false)
-  const initialFormState = { id: null, name: '', username: '' }
-  const [currentUser, setCurrentUser] = useState(initialFormState)
 
   const editRow = user => {
     setEditing(true)
